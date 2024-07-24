@@ -1,5 +1,5 @@
 import express from "express";
-// import ErrorMidleware from "./middleware/Error.js";
+import ErrorMidleware from "./middleware/Error.js";
 import cookieParser from "cookie-parser";
 const app = express();
 import bodyParser from "body-parser";

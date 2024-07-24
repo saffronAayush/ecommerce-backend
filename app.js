@@ -18,7 +18,7 @@ app.use(fileUpload({ useTempFiles: true, tempFileDir: "/tmp/" }));
 
 //Router Import
 import product from "./routes/ProuctRoute.js";
-// import user from "./routes/UserRoute.js";
+import user from "./routes/UserRoute.js";
 import order from "./routes/OrderRoute.js";
 import payment from "./routes/PaymentRoute.js";
 

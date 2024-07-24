@@ -3,7 +3,7 @@ import ErrorHandler from "../utills/ErrorHandler.js";
 import CatchAsynError from "../middleware/AsyncError.js";
 import { User } from "../models/User.model.js";
 import SendToken from "../utills/JwtToken.js";
-import SendEmail from "../utills/sendEmail.js";
+import SendEmail from "../utills/SendEmail.js";
 import crypto from "crypto";
 import cloudinary from "cloudinary";
 

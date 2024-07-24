@@ -20,12 +20,12 @@ app.use(fileUpload({ useTempFiles: true, tempFileDir: "/tmp/" }));
 import product from "./routes/ProuctRoute.js";
 // import user from "./routes/UserRoute.js";
 import order from "./routes/OrderRoute.js";
-// import payment from "./routes/PaymentRoute.js";
+import payment from "./routes/PaymentRoute.js";
 
 app.use("/api/v1", product);
  // app.use("/api/v1", user);
  app.use("/api/v1", order);
- // app.use("/api/v1", payment);
+ app.use("/api/v1", payment);
 
 // //middleware for error
  // app.use(ErrorMidleware);

@@ -1,4 +1,5 @@
 import express from "express";
+import cors from "cors";
 import ErrorMidleware from "./middleware/Error.js";
 import cookieParser from "cookie-parser";
 const app = express();
@@ -15,7 +16,7 @@ app.use(cookieParser());
 app.use(bodyParser.json({ limit: "50mb" }));
 app.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
 app.use(fileUpload({ useTempFiles: true, tempFileDir: "/tmp/" }));
-
+app.use(cors());
 //Router Import
 import product from "./routes/ProuctRoute.js";
 import user from "./routes/UserRoute.js";

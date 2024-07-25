@@ -16,7 +16,9 @@ app.use(cookieParser());
 app.use(bodyParser.json({ limit: "50mb" }));
 app.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
 app.use(fileUpload({ useTempFiles: true, tempFileDir: "/tmp/" }));
-app.use(cors());
+app.use(cors({
+    credentials: true // Allow credentials (cookies, authorization headers, TLS client certificates)
+}));
 //Router Import
 import product from "./routes/ProuctRoute.js";
 import user from "./routes/UserRoute.js";

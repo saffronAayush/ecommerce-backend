@@ -17,6 +17,7 @@ app.use(bodyParser.json({ limit: "50mb" }));
 app.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
 app.use(fileUpload({ useTempFiles: true, tempFileDir: "/tmp/" }));
 app.use(cors({
+    origin: 'http://localhost:3000', // Your frontend URL
     credentials: true // Allow credentials (cookies, authorization headers, TLS client certificates)
 }));
 //Router Import

@@ -9,6 +9,19 @@ import fileUpload from "express-fileupload";
 import dotenv from "dotenv";
 dotenv.config({ path: "./.env" });
 
+app.use(cors({
+    origin: true, // Your frontend URL
+    credentials: true // Allow credentials (cookies, authorization headers, TLS client certificates)
+}));
+
+app.use((req, res, next) => {
+    res.header("Access-Control-Allow-Origin", "*"); // Change '*' to a specific domain if needed
+    res.header("Access-Control-Allow-Credentials", true);
+    res.header("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
+    next();
+});
+
 app.use(express.json({ limit: "50mb" }));
 app.use(express.urlencoded({ limit: "50mb", extended: true }));
 app.use(cookieParser());
@@ -16,10 +29,7 @@ app.use(cookieParser());
 app.use(bodyParser.json({ limit: "50mb" }));
 app.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
 app.use(fileUpload({ useTempFiles: true, tempFileDir: "/tmp/" }));
-app.use(cors({
-    origin: 'http://localhost:3000', // Your frontend URL
-    credentials: true // Allow credentials (cookies, authorization headers, TLS client certificates)
-}));
+
 //Router Import
 import product from "./routes/ProuctRoute.js";
 import user from "./routes/UserRoute.js";

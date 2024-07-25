@@ -5,6 +5,7 @@ import { User } from "../models/User.model.js";
 
 const isAuthenticatedUser = CatchAsynError(async (req, res, next) => {
     const { token } = req.cookies;
+console.log("req",req,"\nreq.cookies",req.cookies,"\ntoken",token)
     if (!token) {
         return next(
             new ErrorHandler(401, "Please Login to acces this resorce")

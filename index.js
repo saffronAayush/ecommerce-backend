@@ -1,6 +1,8 @@
 import app from "./app.js";
 const port = process.env.PORT || 3000;
+import cors from "cors"
 import dotenv from "dotenv";
+app.use(cors());
 dotenv.config({ path: "./.env" });
 import cloudinary from "cloudinary";
 cloudinary.config({

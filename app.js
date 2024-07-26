@@ -10,13 +10,14 @@ import dotenv from "dotenv";
 dotenv.config({ path: "./.env" });
 
 app.use(cors({
-    origin: true, // Your frontend URL
+    origin: 'http://localhost:3000', // Allow only this origin
     credentials: true // Allow credentials (cookies, authorization headers, TLS client certificates)
 }));
 
+// Fallback CORS configuration to handle preflight requests
 app.use((req, res, next) => {
-    res.header("Access-Control-Allow-Origin", "*"); // Change '*' to a specific domain if needed
-    res.header("Access-Control-Allow-Credentials", true);
+    res.header("Access-Control-Allow-Origin", "http://localhost:3000"); // Allow only this origin
+    res.header("Access-Control-Allow-Credentials", "true");
     res.header("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
     next();

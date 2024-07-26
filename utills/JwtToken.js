@@ -4,7 +4,7 @@ const SendToken = async (user, statusCode, res) => {
     //options for cokkie
     const options = {
         expires: new Date(
-            Date.now() + 5 * 24 * 60 * 60 * 1000
+            Date.now() + process.env.JWT_COOKIE_EXPIRE * 24 * 60 * 60 * 1000
         ),
        httpOnly: true,
         secure:true,

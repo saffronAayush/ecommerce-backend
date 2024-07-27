@@ -19,7 +19,7 @@ app.use(cors({
 
 // Fallback CORS configuration to handle preflight requests
 app.use((req, res, next) => {
-    res.header("Access-Control-Allow-Origin", "*"); // Allow only this origin
+    res.header("Access-Control-Allow-Origin", "https://react-folder-99p53y4cf-aayushs-projects-38bc9184.vercel.app"); // Allow only this origin
     res.header("Access-Control-Allow-Credentials", "true");
     res.header("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");

@@ -51,16 +51,20 @@ const LoginUser = CatchAsynError(async function (req, res, next) {
 
 //logout
 const LogoutUser = CatchAsynError(async (req, res, next) => {
-    res.cookie("token", null, {
-        expires: new Date(Date.now()),
+    // Clear the token cookie
+    res.cookie("token", "", {
+        expires: new Date(Date.now() - 3600000), // Set a past expiration date
         httpOnly: true,
+        secure:true, // Use secure flag in production
+        sameSite: 'None' // Ensure this matches your frontend configuration
     });
 
     res.status(200).json({
         success: true,
-        message: "User has been loged out",
+        message: "User has been logged out",
     });
 });
+
 
 //forgot password
 const ForgotPassword = CatchAsynError(async (req, res, next) => {

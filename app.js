@@ -19,12 +19,12 @@ app.use(cors({
 
 // Fallback CORS configuration to handle preflight requests
 app.use((req, res, next) => {
-    res.header("Access-Control-Allow-Origin", "http://localhost:3000"); // Allow only this origin
+    res.header("Access-Control-Allow-Origin", req.headers.origin); // Allow only this origin
     res.header("Access-Control-Allow-Credentials", "true");
     res.header("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
     next();
-});
+})
 
 app.use(express.json({ limit: "50mb" }));
 app.use(express.urlencoded({ limit: "50mb", extended: true }));

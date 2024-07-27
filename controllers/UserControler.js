@@ -59,11 +59,24 @@ const LogoutUser = CatchAsynError(async (req, res, next) => {
         sameSite: 'None' // Ensure this matches your frontend configuration
     });
 
+    // Check if there are any cookies
+    if (Object.keys(req.cookies).length > 0) {
+        Object.keys(req.cookies).forEach((cookieName) => {
+            res.cookie(cookieName, "", {
+                expires: new Date(Date.now() - 3600000), // Set a past expiration date
+                httpOnly: true,
+                secure: true, // Use secure flag in production
+                sameSite: 'None' // Ensure this matches your frontend configuration
+            });
+        });
+    }
+
     res.status(200).json({
         success: true,
-        message: "User has been logged out",
+        message: "User has been logged out and cookies have been cleared if any were present",
     });
 });
+
 
 
 //forgot password

@@ -5,79 +5,28 @@ import ApiFeature from "../utills/ApiFeatures.js";
 import cloudinary from "cloudinary";
 import crypto from 'crypto';
 // Admin only ---------------------
-const cloudinaryConfig = {
-    cloud_name: 'your_cloud_name',
-    api_key: process.env.CLOUDINARY_API_KEY,
-    api_secret: process.env.CLOUDINARY_API_SECRET
-};
-
-const createCloudinarySignature = (params_to_sign) => {
-    const toSign = Object.keys(params_to_sign)
-        .sort()
-        .map(key => `${key}=${params_to_sign[key]}`)
-        .join('&');
-
-    const hash = crypto
-        .createHash('sha1')
-        .update(`${toSign}${process.env.CLOUDINARY_API_SECRET}`)
-        .digest('hex');
-
-    return hash;
-};
-
 const CreatProduct = CatchAsynError(async (req, res, next) => {
-   try {
-        console.log("in creat");
+    console.log("in creat");
+    let images = JSON.parse(req.body.images);
 
-        // Parse images from request body
-        let images = JSON.parse(req.body.images);
-        console.log(typeof images);
-
-        // Array to store image links
-        const imageLinks = [];
-
-        // Upload images to Cloudinary
-        for (let image of images) {
-            const params = {
-                folder: 'products',
-                timestamp: Math.round(new Date().getTime() / 1000)
-            };
-
-            const signature = cloudinary.utils.api_sign_request(
-                {
-                     timestamp: Math.round(new Date().getTime() / 1000).toString()
-                },
-                cloudinaryConfig.api_secret
-                
-            );
-
-            const result = await cloudinary.v2.uploader.upload(image, {
-                folder: params.folder,
-                timestamp: params.timestamp,
-                signature: signature,
-                api_key: cloudinaryConfig.api_key
-            });
-
-            imageLinks.push({
-                public_id: result.public_id,
-                url: result.secure_url,
-            });
-        }
-
-        // Update request body
-        req.body.images = imageLinks;
-        req.body.createdBY = req.user.id;
-
-        console.log(req.body);
-
-        // Create product in the database
-        const product = await Product.create(req.body);
-
-        // Send response
-        res.status(201).json({ success: true, product });
-    } catch (error) {
-        next(error);
+    console.log(typeof images);
+    const imageLinks = [];
+    for (let i = 0; i < images.length; i++) {
+        const result = await cloudinary.v2.uploader.upload(images[i], {
+            folder: "products",
+        });
+        imageLinks.push({
+            public_id: result.public_id,
+            url: result.secure_url,
+        });
     }
+
+    req.body.images = imageLinks;
+    req.body.createdBY = req.user.id;
+    console.log(req.body);
+    const product = await Product.create(req.body);
+
+    res.status(201).json({ success: true, product });
 });
 // get all products
 const GetAllProducts = CatchAsynError(async (req, res, next) => {

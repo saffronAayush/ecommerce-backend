@@ -27,7 +27,7 @@ const createCloudinarySignature = (params_to_sign) => {
 
 const CreatProduct = CatchAsynError(async (req, res, next) => {
   console.log("in creat");
-    let images = JSON.parse(req.body.images);
+    let images = await JSON.parse(req.body.images);
 
     console.log(typeof images);
     const imageLinks = [];

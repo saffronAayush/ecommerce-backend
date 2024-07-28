@@ -43,7 +43,13 @@ const CreatProduct = CatchAsynError(async (req, res, next) => {
                 timestamp: Math.round(new Date().getTime() / 1000)
             };
 
-            const signature = createCloudinarySignature(params);
+            const signature = cloudinary.utils.api_sign_request(
+                {
+                     timestamp: Math.round(new Date().getTime() / 1000)
+                },
+                cloudinaryConfig.api_secret
+                
+            );
 
             const result = await cloudinary.v2.uploader.upload(image, {
                 folder: params.folder,

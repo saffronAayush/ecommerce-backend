@@ -6,9 +6,9 @@ import cloudinary from "cloudinary";
 import crypto from 'crypto';
 // Admin only ---------------------
 const cloudinaryConfig = {
-    cloud_name: "dfwgakqfi",
-    api_key: 645338565867895,
-    api_secret:"0MPA1yaJDo9MBe-58PXb-09cGZM"
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET
 };
 
 cloudinary.v2.config(cloudinaryConfig);

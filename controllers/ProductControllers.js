@@ -19,7 +19,7 @@ const createCloudinarySignature = (params_to_sign) => {
 
     const hash = crypto
         .createHash('sha1')
-        .update(`${toSign}${cloudinaryConfig.api_secret}`)
+        .update(`${toSign}${process.env.CLOUDINARY_API_SECRET}`)
         .digest('hex');
 
     return hash;
@@ -49,7 +49,7 @@ const CreatProduct = CatchAsynError(async (req, res, next) => {
                 folder: params.folder,
                 timestamp: params.timestamp,
                 signature: signature,
-                api_key: cloudinaryConfig.api_key
+                api_key: process.env.CLOUDINARY_API_KEY
             });
 
             imageLinks.push({

@@ -6,9 +6,9 @@ app.use(cors());
 dotenv.config({ path: "./.env" });
 import cloudinary from "cloudinary";
 cloudinary.config({
-    cloud_name: dfwgakqfi,
-    api_key: 645338565867895,
-    api_secret: "0MPA1yaJDo9MBe-58PXb-09cGZM",
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 import connectDB from "./db/DB.js";
 connectDB();

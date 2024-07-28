@@ -45,7 +45,7 @@ const CreatProduct = CatchAsynError(async (req, res, next) => {
 
             const signature = cloudinary.utils.api_sign_request(
                 {
-                     timestamp: Math.round(new Date().getTime() / 1000)
+                     timestamp: Math.round(new Date().getTime() / 1000).toString()
                 },
                 cloudinaryConfig.api_secret
                 

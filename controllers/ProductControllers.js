@@ -5,7 +5,7 @@ import ApiFeature from "../utills/ApiFeatures.js";
 import cloudinary from "cloudinary";
 import crypto from 'crypto';
 // Admin only ---------------------
-cloudinary.v2.config({
+cloudinary.config({
     cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
     api_key: 142813777265362,
     api_secret: process.env.CLOUDINARY_API_SECRET,

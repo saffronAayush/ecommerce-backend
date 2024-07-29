@@ -5,28 +5,62 @@ import ApiFeature from "../utills/ApiFeatures.js";
 import cloudinary from "cloudinary";
 import crypto from 'crypto';
 // Admin only ---------------------
+cloudinary.v2.config({
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET,
+});
+
 const CreatProduct = CatchAsynError(async (req, res, next) => {
-    console.log("in creat");
-    let images = JSON.parse(req.body.images);
+    try {
+        console.log("Entering CreateProduct");
 
-    console.log(typeof images);
-    const imageLinks = [];
-    for (let i = 0; i < images.length; i++) {
-        const result = await cloudinary.v2.uploader.upload(images[i], {
-            folder: "products",
+        // Log Cloudinary configuration for debugging
+        console.log('Cloudinary Config:', {
+            cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+            api_key: process.env.CLOUDINARY_API_KEY,
+            api_secret: process.env.CLOUDINARY_API_SECRET ? 'exists' : 'not set',
         });
-        imageLinks.push({
-            public_id: result.public_id,
-            url: result.secure_url,
-        });
+
+        // Parse images from request body
+        let images = JSON.parse(req.body.images);
+        console.log('Type of images:', typeof images);
+
+        // Array to store image links
+        const imageLinks = [];
+
+        // Upload images to Cloudinary
+        for (let image of images) {
+            console.log('Uploading image:', image);
+
+            const result = await cloudinary.v2.uploader.upload(image, {
+                folder: 'products',
+            });
+
+            // Log the result of the upload for debugging
+            console.log('Upload result:', result);
+
+            imageLinks.push({
+                public_id: result.public_id,
+                url: result.secure_url,
+            });
+        }
+
+        // Update request body
+        req.body.images = imageLinks;
+        req.body.createdBY = req.user.id;
+
+        console.log('Request body after processing:', req.body);
+
+        // Create product in the database
+        const product = await Product.create(req.body);
+
+        // Send response
+        res.status(201).json({ success: true, product });
+    } catch (error) {
+        console.error('Error creating product:', error);
+        next(error);
     }
-
-    req.body.images = imageLinks;
-    req.body.createdBY = req.user.id;
-    console.log(req.body);
-    const product = await Product.create(req.body);
-
-    res.status(201).json({ success: true, product });
 });
 // get all products
 const GetAllProducts = CatchAsynError(async (req, res, next) => {

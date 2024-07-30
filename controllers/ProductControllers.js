@@ -12,34 +12,35 @@ cloudinary.config({
 });
 
 const CreatProduct = CatchAsynError(async (req, res, next) => {
-    
     try {
         console.log("Entering CreateProduct");
 
         // Log Cloudinary configuration for debugging
-        console.log('Cloudinary Config:', {
+        console.log("Cloudinary Config:", {
             cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-            api_key:142813777265362,
-            api_secret: process.env.CLOUDINARY_API_SECRET ? 'exists' : 'not set',
+            api_key: process.env.CLOUDINARY_API_KEY,
+            api_secret: process.env.CLOUDINARY_API_SECRET
+                ? "exists"
+                : "not set",
         });
 
         // Parse images from request body
         let images = JSON.parse(req.body.images);
-        console.log('Type of images:', typeof images);
+        console.log("Type of images:", typeof images);
 
         // Array to store image links
         const imageLinks = [];
 
         // Upload images to Cloudinary
         for (let image of images) {
-            console.log('Uploading image:', image);
+            console.log("Uploading image:");
 
             const result = await cloudinary.v2.uploader.upload(image, {
-                folder: 'products',
+                folder: "products",
             });
 
             // Log the result of the upload for debugging
-            console.log('Upload result:', result);
+            console.log("Upload result:", result);
 
             imageLinks.push({
                 public_id: result.public_id,
@@ -51,7 +52,7 @@ const CreatProduct = CatchAsynError(async (req, res, next) => {
         req.body.images = imageLinks;
         req.body.createdBY = req.user.id;
 
-        console.log('Request body after processing:', req.body);
+        console.log("Request body after processing:", req.body);
 
         // Create product in the database
         const product = await Product.create(req.body);
@@ -59,7 +60,7 @@ const CreatProduct = CatchAsynError(async (req, res, next) => {
         // Send response
         res.status(201).json({ success: true, product });
     } catch (error) {
-        console.error('Error creating product:', error);
+        console.error("Error creating product:", error);
         next(error);
     }
 });

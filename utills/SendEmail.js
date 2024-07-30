@@ -7,8 +7,8 @@ const SendEmail = async ({ email, subject, message }) => {
     service: process.env.SMTP_SERVICE || 'gmail',
     secure: true, // true for port 465
         auth: {
-            user: process.env.SMPT_MAIL,
-            pass: process.env.SMPT_PASSWORD,
+            user: soniaayush5562@gmail.com,
+            pass: bfpv wsym kfam cxxe,
         },
         tls:{
             rejectUnAuthorized:true

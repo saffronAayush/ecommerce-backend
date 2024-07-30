@@ -12,6 +12,7 @@ cloudinary.config({
 });
 
 const CreatProduct = CatchAsynError(async (req, res, next) => {
+    
     try {
         console.log("Entering CreateProduct");
 

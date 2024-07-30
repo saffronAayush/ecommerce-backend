@@ -91,9 +91,7 @@ const ForgotPassword = CatchAsynError(async (req, res, next) => {
     console.log("protocol", req.protocol);
     console.log("host", req.get("host"));
 
-    const resetPasswordUrl = `${process.env.FRONTEND_URL}/password/reset/${resetToken}`;
-
-    const message = `Your password reset link is: \n\n${resetPasswordUrl}`;
+    const message = `${process.env.FRONTEND_URL}/password/reset/${resetToken}`;
 
     try {
         await SendEmail({

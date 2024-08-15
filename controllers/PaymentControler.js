@@ -3,7 +3,7 @@ import dotenv from "dotenv";
 dotenv.config({ path: "./.env" });
 
 import Stripe from "stripe";
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
+const stripe = new Stripe(sk_test_51PdCqSEMWt45P6mpv1jfN4ygZOk3GifUFQlxSKjWHlGEzDXHmqSruzLeVoBzLvUdOHGdx2s0rlQbX33b1TZTwRLu00iYGuOTzK);
 
 export const ProcessPayment = CatchAsynError(async (req, res, next) => {
     const myPayment = await stripe.paymentIntents.create({

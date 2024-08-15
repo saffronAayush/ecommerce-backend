@@ -4,7 +4,7 @@ dotenv.config({ path: "./.env" });
 
 import Stripe from "stripe";
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
-
+//comiting to make the changes enable in env of the strip secret
 export const ProcessPayment = CatchAsynError(async (req, res, next) => {
     const myPayment = await stripe.paymentIntents.create({
         amount: req.body.amount,
